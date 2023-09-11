@@ -1,0 +1,260 @@
+<%- include('../partials/_header.ejs') -%>
+
+  <!-- sidebar -->
+  <%- include('../partials/_sidebar.ejs') -%>
+    <!-- sidebar -->
+
+    <div class="page-wrapper">
+
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+        <!-- partial -->
+
+        <div class="page-content">
+
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card" style="border-radius: 1rem;">
+                <div class="card-body">
+                  <h6 class="card-title">
+                    Sipairşler
+                  </h6>
+                  <div class="table-responsive">
+                    <table id="dataTableExample" class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>
+                            <%= __("admin.orders.page.table.date") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.link") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.charge") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.startCount") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.quantity") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.service") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.remains") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.refill") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.status") %>
+                          </th>
+                          <th>
+                            <%= __("admin.orders.page.table.actions") %>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(ordersx.length==0) { %>
+                          <tr>
+                            <td colspan="11" style="text-align: center;">
+                              Here is no orders.
+                            </td>
+                          </tr>
+                          <% } %>
+                            <% ordersx.forEach(order=> { %>
+                              <tr>
+                                <td>
+                                  <%= order.id %>
+                                </td>
+                                <td id="orders_<%= order._id %>">
+                                  <script>
+                                    document.getElementById("orders_" + "<%= order._id %>").innerHTML = new Date((typeof "<%= order.date %>" === "string" ? new Date("<%= order.date %>") : "<%= order.date %>").toLocaleString("en-US", { timeZone: "<%= timezone %>" })).toLocaleString();
+                                  </script>
+                                </td>
+                                <td>
+                                  <a href="<%= order.order.url %>" target="_blank" id="orderUrl_<%= order._id %>"><%= order.charge.order.url %></a>
+                                </td>
+                                <td>
+                                  <%= order.price.amount %> (<%= order.price.currency %>)
+                                </td>
+                                <td id="startNumber_<%= order._id %>"><%= order.order.startCount %></td>
+                                <td id="editStartNumber_<%= order._id %>"><%= order.order.quantity %></td>
+                                <td>
+                                  <%= order.service.name %>
+                                </td>
+                                <td>
+                                  <%= order.order.remain %>
+                                </td>
+                                <td>
+                                  <% if(order.order.refill) { %>
+                                    <a class="btn btn-success btn-sm"
+                                      href="<%= sitePages.refill.url %>?refill=<%= order.order.id %>">
+                                      <%= __("admin.orders.page.table.refill") %>
+                                    </a>
+                                    <% } else { %>
+                                      <span>#</span>
+                                      <% } %>
+                                </td>
+                                <td>
+                                  <span>
+                                    <% if(order.order.status=="pending" ) { %>
+                                      <%= __("admin.orders.page.table.statuses.pending") %>
+                                    <% } else if(order.order.status=="processing" ) { %>
+                                      <%= __("admin.orders.page.table.statuses.processing") %>
+                                    <% } else if(order.order.status=="completed" ) { %>
+                                      <%= __("admin.orders.page.table.statuses.completed") %>
+                                    <% } else if(order.order.status=="cancelled" ) { %>
+                                      <%= __("admin.orders.page.table.statuses.cancelled") %>
+                                    <% } else if(order.order.status=="partial" ) { %>
+                                      <%= __("admin.orders.page.table.statuses.partiallyCompleted") %>
+                                    <% } %>
+                                  </span>
+                                </td>
+
+                                <td>
+                                  <div class="btn-group-sm" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                      aria-haspopup="true" aria-expanded="false">
+                                      <%= __("admin.orders.page.table.actions") %>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                      <a class="dropdown-item" href="/admin/orders/detail?order=<%= order._id %>">Sipariş Detayı</a>
+                                      <a class="dropdown-item" href="?=changeLink_<%= order._id %>">Sipariş Linkini Düzenle</a>
+                                      <a class="dropdown-item" href="?=editStartNumber_<%= order._id %>">Başlangıç Sayısını Düzenle</a>
+                                      <a class="dropdown-item" href="?=editTheRest_<%= order._id %>">Kalan Miktarı Düzenle</a>
+                                      <hr>
+                                      <span class="text-muted">Durumu Güncelle</span>
+                                      <a class="dropdown-item" href="/admin/orders/status/cancellation_refund?order=<%= order._id %>">İptal ve İade Et</a>
+                                      <a class="dropdown-item" href="/admin/orders/status/completed?order=<%= order._id %>">Tamamlandı</a>
+                                      <a class="dropdown-item" href="/admin/orders/status/loading?order=<%= order._id %>">Yükleniyor</a>
+                                    </div>
+                                  </div>
+                                </td>
+
+                              </tr>
+
+                              <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- MODAL changeLink_ -->
+          <a href="#" id="changeLinkc" data-bs-toggle="modal" data-bs-target="#changeLink" hidden></a>
+          <div class="modal fade" id="changeLink" tabindex="-1" aria-labelledby="changeLink"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Sipariş Linkini Düzenle
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+          
+                  <div class="form-group">
+                    <label for="url">Sipariş Linki</label>
+                    <input type="text" class="form-control" id="urlChange" name="url" value="" required>
+                  </div>
+          
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                  <button type="button" class="btn btn-primary">Kaydet</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODAL editStartNumber_ -->
+          <a href="#" id="editStartNumberc" data-bs-toggle="modal" data-bs-target="#editStartNumber" hidden></a>
+
+          <div class="modal fade" id="editStartNumber" tabindex="-1" aria-labelledby="editStartNumber" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Başlangıç Sayısını Düzenle
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+          
+                  <div class="form-group">
+                    <label for="number">Başlangıç Sayısı</label>
+                    <input type="number" class="form-control" id="startNumberChange" name="number" min="0" value="" required>
+                  </div>
+          
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                  <button type="button" class="btn btn-primary">Kaydet</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODAL editTheRest_ -->
+          <a href="#" id="editTheRestc" data-bs-toggle="modal" data-bs-target="#editTheRest" hidden></a>
+          
+          <div class="modal fade" id="editTheRest" tabindex="-1" aria-labelledby="editTheRest" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Kalan Miktarı Düzenle
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+          
+                  <div class="form-group">
+                    <label for="number">Kalan Miktar</label>
+                    <input type="number" class="form-control" id="theRest_" name="number" value="" min="1" required>
+                  </div>
+          
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                  <button type="button" class="btn btn-primary">Kaydet</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            let params = new URLSearchParams(document.location.search.substring(1));
+            if (params.has("changeLink_")) {
+              setTimeout(function () {
+                document.getElementById("changeLinkc").click();
+                document.getElementById("urlChange").value = document.getElementById("orderUrl_" + params.get("changeLink_")).innerHTML;
+              }, 1000);
+            }
+
+            if (params.has("editStartNumber_")) {
+              setTimeout(function () {
+                document.getElementById("editStartNumberc").click();
+                document.getElementById("startNumberChange").value = document.getElementById("startNumber_" + params.get("editStartNumber_")).innerHTML;
+              }, 1000);
+            }
+
+            if (params.has("editTheRest_")) {
+              setTimeout(function () {
+                document.getElementById("editTheRestc").click();
+                document.getElementById("theRestChange").value = document.getElementById("theRest_" + params.get("editTheRest_")).innerHTML;
+              }, 1000);
+            }
+          </script>
+          <!-- MODAL -->
+        </div>
+
+        <!-- footer -->
+        <%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+          <!-- footer -->

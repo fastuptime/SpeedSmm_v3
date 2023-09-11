@@ -1,0 +1,224 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+
+        <div class="row">
+          <div class="col-12 col-xl-12 stretch-card">
+
+            <div class="row flex-grow-1">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card" style="border-radius: 1rem;">
+                  <div class="row card-body" style="text-align: center; padding-top: 45px;">
+                    <div class="col-md-6 mb-4" style="border-right: 1px solid #ebedf2;">
+                    <strong><%= __("childPanels.page.ns.title") %> </strong> <%= __("childPanels.page.ns.description") %>
+                    <div style="margin-top: 20px;">
+                      <strong>NS1:</strong> ns1.speedsmm.com<br>
+                      <strong>NS2:</strong> ns2.speedsmm.com<br>
+                    </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <p style="margin-top: 10px; font-size: 18px;">
+                        <%= __("childPanels.page.ns.description2") %>
+                      </p>
+                      <p style="margin-top: 10px;">
+                        <%= __("childPanels.page.ns.description3") %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div> <!-- row -->
+
+        <!-- Sipariş -->
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card" style="border-radius: 1rem;">
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="domain" class="form-label">
+                      <%= __("childPanels.page.domain") %>
+                    </label>
+                    <input type="text" class="form-control" name="domain">
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                    <label for="admin_username" class="form-label">
+                      <%= __("childPanels.page.adminUsername") %>
+                    </label>
+                    <input type="text" class="form-control" name="admin_username">
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                    <label for="currency" class="form-label">
+                      <%= __("childPanels.page.currency") %>
+                    </label>
+                    <select class="form-control" name="currency">
+                      <option value="USD">
+                        United States Dollars (USD)
+                      </option>
+                      <option value="RUB">
+                        Russian Rubles (RUB)
+                      </option>
+                      <option value="THB">
+                        Thai Baht (THB)
+                      </option>
+                      <option value="TRY">
+                        Turkish Lira (TRY)
+                      </option>
+                      <option value="EUR">
+                        Euro (EUR)
+                      </option>
+                      <option value="IDR">
+                        Indonesian Rupiah (IDR)
+                      </option>
+                      <option value="BRL">
+                        Brazilian Real (BRL)
+                      </option>
+                      <option value="CNY">
+                        Chinese Yuan (CNY)
+                      </option>
+                      <option value="KRW">
+                        South Korean Won (KRW)
+                      </option>
+                      <option value="INR">
+                        Indian Rupee (INR)
+                      </option>
+                      <option value="IRR">
+                        Iranian Rial (IRR)
+                      </option>
+                      <option value="SAR">
+                        Saudi Arabia Riyal (SAR)
+                      </option>
+                      <option value="PLN">
+                        Polish złoty (PLN)
+                      </option>
+                      <option value="MYR">
+                        Malaysian Ringgit (MYR)
+                      </option>
+                      <option value="GBP">
+                        Pound sterling (GBP)
+                      </option>
+                      <option value="KWD">
+                        Kuwaiti dinar (KWD)
+                      </option>
+                      <option value="SEK">
+                        Swedish krona (SEK)
+                      </option>
+                      <option value="ILS">
+                        Israeli shekel (ILS)
+                      </option>
+                      <option value="HKD">
+                        Hong Kong dollar (HKD)
+                      </option>
+                      <option value="NGN">
+                        Nigerian naira (NGN)
+                      </option>
+                      <option value="KES">
+                        Kenyan shilling (KES)
+                      </option>
+                      <option value="JPY">
+                        Japanese Yen (JPY)
+                      </option>
+                      <option value="ARS">
+                        Argentine peso (ARS)
+                      </option>
+                      <option value="VND">
+                        Vietnamese đồng (VND)
+                      </option>
+                      <option value="CAD">
+                        Canadian dollar (CAD)
+                      </option>
+                      <option value="IQD">
+                        Iraqi dinar (IQD)
+                      </option>
+                      <option value="TWD">
+                        New Taiwan Dollars (TWD)
+                      </option>
+                      <option value="AZN">
+                        Azerbaijani manat (AZN)
+                      </option>
+                      <option value="BYN">
+                        Belarusian ruble (BYN)
+                      </option>
+                      <option value="KZT">
+                        Kazakhstani tenge (KZT)
+                      </option>
+                      <option value="UAH">
+                        Ukrainian hryvnia (UAH)
+                      </option>
+                      <option value="RON">
+                        Romanian leu (RON)
+                      </option>
+                      <option value="AED">
+                        United Arab Emirates dirham (AED)
+                      </option>
+                      <option value="COP">
+                        Colombian peso (COP)
+                      </option>
+                      <option value="PKR">
+                        Pakistan Rupee (PKR)
+                      </option>
+                      <option value="EGP">
+                        Egyptian Pound (EGP)
+                      </option>
+                      <option value="PHP">
+                        Philippine peso (PHP)
+                      </option>
+                      <option value="GHS">
+                        Ghanaian Cedi (GHS)
+                      </option>
+                      <option value="BDT">
+                        Bangladeshi taka (BDT)
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                    <label for="admin_password" class="form-label">
+                      <%= __("childPanels.page.adminPassword") %>
+                    </label>
+                    <input type="text" class="form-control" name="admin_password">
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                    <label for="monthly_price" class="form-label">
+                      <%= __("childPanels.page.monthlyPrice") %>
+                    </label>
+                    <input type="text" class="form-control" name="monthly_price" value="<%= siteData.site.modules.childPanel.price %> <%- siteData.site.currency %>" disabled>
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                    <label for="admin_password_repeat" class="form-label">
+                      <%= __("childPanels.page.adminPasswordRepeat") %>
+                    </label>
+                    <input type="text" class="form-control" name="admin_password_repeat">
+                  </div>
+
+                  <div class="mb-3">
+                    <button class="btn btn-primary col-md-12"><%= __("childPanels.page.buy") %></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- Sipariş -->
+
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "child_panels" }) -%>
+			<!-- footer -->

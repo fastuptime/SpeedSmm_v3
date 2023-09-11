@@ -1,0 +1,131 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card" style="border-radius: 1rem;">
+								<div class="card-body">
+
+									<div class="mb-3 col-md-12">
+										<label for="subject" class="form-label">
+											<%= __("support.page.subject") %>
+										</label>
+										<select class="form-control" name="subject">
+											<option value="0" selected disabled> <%= __("support.page.pleaseSelect") %> </option>
+											<% Object.values(siteData.site.support.subjects).forEach((item) => { %>
+												<option value="<%= item %>">
+													<%= item %>
+												</option>
+											<% }); %>
+										</select>
+									</div>
+
+									<div class="mb-3 col-md-12">
+										<label for="orderIDs" class="form-label">
+											<%= __("support.page.orderIDs") %>
+										</label>
+										<input type="text" class="form-control" name="orderIDs" placeholder="<%= __("support.page.orderIDsExample") %>">
+									</div>
+
+									<div class="mb-3 col-md-12">
+										<label for="reasons_for_request" class="form-label">
+											<%= __("support.page.reasons_for_request") %>
+										</label>
+										<select class="form-control" name="reasons_for_request">
+											<option value="0" selected disabled> <%= __("support.page.pleaseSelect") %> </option>
+											<% Object.values(siteData.site.support.reasons_for_request).forEach((item)=> { %>
+												<option value="<%= item %>">
+													<%= item %>
+												</option>
+												<% }); %>
+										</select>
+									</div>
+
+									<div class="mb-3 col-md-12">
+										<label for="message" class="form-label">
+											<%= __("support.page.message") %>
+										</label>
+										<textarea class="form-control" name="message" rows="5" placeholder="<%= __("support.page.messagePlaceholder") %>"></textarea>
+									</div>
+
+									<div class="mb-3 col-md-12">
+										<button class="btn btn-primary col-md-12">
+											<%= __("support.page.createRequest") %>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card"  style="border-radius: 1rem;">
+						<div class="card-body">
+							<h6 class="card-title"><%= __("support.page.myRequests") %></h6>
+							<p class="text-muted mb-3"><%= __("support.page.myRequestsDescription") %></p>
+							<div class="table-responsive">
+							<table id="dataTableExample" class="table">
+								<thead>
+								<tr>
+									<th>ID</th>
+									<th><%= __("support.page.subject") %></th>
+									<th><%= __("support.page.status") %></th>
+									<th><%= __("support.page.lastUpdate") %></th>
+								</tr>
+								</thead>
+								<tbody>
+								<% if(supports.length == 0) { %>
+								<tr>
+									<td colspan="4" style="text-align: center;"><%= __("support.page.noSupport") %></td>
+								</tr>
+								<% } %>
+								<% supports.forEach((item) => { %>
+								<tr>
+									<td><%= item.id %></td>
+									<td>
+										<a href="/viewticket/<%= item.id %>"><% if(item.subject.length > 10) { %><%= item.subject.substring(0, 10) %>...<% } else { %><%= item.subject %><% } %></a>
+									</td>
+									<td>
+										<% if(item.status == 'pending') { %>
+										<span class="badge bg-warning"><%= __("support.page.pending") %></span>
+										<% } else if(item.status == 'answered') { %>
+										<span class="badge bg-success"><%= __("support.page.answered") %></span>
+										<% } else if(item.status == 'closed') { %>
+										<span class="badge bg-danger"><%= __("support.page.closed") %></span>
+										<% } else if(item.status == 'resolved') { %>
+										<span class="badge bg-info"><%= __("support.page.resolved") %></span>
+										<% } else { %>
+										<span class="badge bg-danger"><%= __("support.page.unknown") %></span>
+										<% } %>
+									</td>
+									<td id="timeZoneSupport_<%= item._id %>"><%= item.updated_at %></td>
+								</tr>
+								<script>
+									document.getElementById("timeZoneSupport_" + "<%= item._id %>").innerHTML = new Date((typeof "<%= item.updated_at %>" === "string" ? new Date("<%= item.updated_at %>") : "<%= item.updated_at %>").toLocaleString("en-US", { timeZone: "<%= timezone %>" })).toLocaleString();
+								</script>
+								<% }); %>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+			<!-- footer -->

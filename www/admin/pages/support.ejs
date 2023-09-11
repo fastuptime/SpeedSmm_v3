@@ -1,0 +1,101 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+			<div class="page-content">
+				<div class="form-group" style="margin-right: 10px; margin-left: 10px; margin-bottom: 20px;">
+					<label for="status">Görüntüle :</label>
+					<select class="form-control" id="status" name="status">
+						<option value="all">Tümü</option>
+						<option value="pending">Açık</option>
+						<option value="answered">Kullanıcı Cevapladı</option>
+						<option value="closed">Kapatıldı</option>
+						<option value="resolved">Çözüldü</option>
+					</select>
+				</div>
+				<script>
+					document.getElementById('status').addEventListener('change', function () {
+						var status = this.value;
+						var url = window.location.href;
+						var newUrl = url.split('?')[0] + '?status=' + status;
+						window.location.href = newUrl;
+					});
+					let url = new URL(window.location.href);
+					let status = url.searchParams.get("status");
+					if (status) {
+						document.getElementById('status').value = status;
+					} else {
+						document.getElementById('status').value = 'all';
+					}
+				</script>
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card"  style="border-radius: 1rem;">
+						<div class="card-body">
+							<h6 class="card-title"><%= __("admin.support.page.Requests") %></h6>
+							<p class="text-muted mb-3"><%= __("admin.support.page.RequestsDescription") %></p>
+							<div class="table-responsive">
+							<table id="dataTableExample" class="table">
+								<thead>
+								<tr>
+									<th>ID</th>
+									<th><%= __("admin.support.page.customer") %></th>
+									<th><%= __("admin.support.page.subject") %></th>
+									<th><%= __("admin.support.page.status") %></th>
+									<th><%= __("admin.support.page.createAT") %></th>
+									<th><%= __("admin.support.page.lastUpdate") %></th>
+								</tr>
+								</thead>
+								<tbody>
+								<% if(supports.length == 0) { %>
+								<tr>
+									<td colspan="6" style="text-align: center;"><%= __("admin.support.page.noSupport") %></td>
+								</tr>
+								<% } %>
+								<% supports.forEach((item) => { %>
+								<tr>
+									<td><%= item.id %></td>
+									<td>
+										<a href="/admin/users?user=<%= item.userID %>"><% if(item.userID.length > 10) { %><%= item.userID.substring(0, 10) %>...<% } else { %><%= item.userID %><% } %></a>
+									</td>
+									<td>
+										<a href="/admin/viewticket/<%= item.id %>"><% if(item.subject.length > 10) { %><%= item.subject.substring(0, 10) %>...<% } else { %><%= item.subject %><% } %></a>
+									</td>
+									<td>
+										<% if(item.status == 'pending') { %>
+										<span class="badge bg-warning"><%= __("admin.support.page.open") %></span>
+										<% } else if(item.status == 'answered') { %>
+										<span class="badge bg-success"><%= __("admin.support.page.responded") %></span>
+										<% } else if(item.status == 'closed') { %>
+										<span class="badge bg-danger"><%= __("admin.support.page.closed") %></span>
+										<% } else if(item.status == 'resolved') { %>
+										<span class="badge bg-info"><%= __("admin.support.page.resolved") %></span>
+										<% } else { %>
+										<span class="badge bg-danger"><%= __("admin.support.page.unknown") %></span>
+										<% } %>
+									</td>
+									<td>
+										<%= item.created_at %>
+									</td>
+									<td><%= item.updated_at %></td>
+								</tr>
+								<% }); %>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+			<!-- footer -->

@@ -1,0 +1,96 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+        <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+          <h4 class="mb-3">Ödemeler</h4>
+        </div>
+
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="dataTableExample" class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User ID</th>
+                      <th>Eski Bakiye</th>
+                      <th>Tutar</th>
+                      <th>Method</th>
+                      <th>Statü</th>
+                      <th>Not</th>
+                      <th>İşlem Tarihi</th>
+                      <th>Son Güncelleme</th>
+                      <th>Tüm Detaylar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if(payments.length==0) { %>
+                      <tr>
+                        <td colspan="10" style="text-align: center;">Ödeme Bulunamadı.</td>
+                      </tr>
+                      <% } %>
+                        <% payments.forEach((item)=> { %>
+                          <tr>
+                            <td>
+                              <%= item.id %>
+                            </td>
+                            <td>
+                              <a href="/admin/users?user=<%= item.userID %>" class="text-dark"><%= item.userID %></a>
+                            </td>
+                            <td>
+                              <%= item.oldBalance %>
+                            </td>
+                            <td>
+                              <%= item.amount %> (<%= item.currency %>)
+                            </td>
+                            <td>
+                              <%= item.method %>
+                            </td>
+                            <td>
+                              <% if(item.status == 'success') { %>
+                                <span class="badge badge-success">Başarılı</span>
+                              <% } else if(item.status == 'pending') { %>
+                                <span class="badge badge-warning">Beklemede</span>
+                              <% } else if(item.status == 'failed') { %>
+                                <span class="badge badge-danger">Başarısız</span>
+                              <% } else { %>
+                                <span class="badge badge-info">Bilinmiyor</span>
+                              <% } %>
+                            </td>
+                            <td>
+                              <%= item.note %>
+                            </td>
+                            <td>
+                              <%= item.date %>
+                            </td>
+                            <td>
+                              <%= item.lastUpDt %>
+                            </td>
+                            <td>
+                              <a href="/admin/payments/details/<%= item._id %>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            </td>
+
+                          </tr>
+                          <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "users" }) -%>
+			<!-- footer -->

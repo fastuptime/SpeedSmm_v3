@@ -1,0 +1,742 @@
+<%- include('../partials/_header.ejs') -%>
+<!-- sidebar -->
+<%- include('../partials/_sidebar.ejs') -%>
+<!-- sidebar -->
+<style>
+  .m-t-md,
+  .m-b-md {
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 20px;
+  }
+  figure {
+  border-radius: 1rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  }
+  .exampleCodes {
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 24px;
+  }
+  .exampleCodesimg {
+  width: 15%;
+  height: 25%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 24px;
+  }
+  @media only screen and (max-width: 600px) {
+  .exampleCodes {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 24px;
+  }
+  .exampleCodesimg {
+  width: 50%;
+  height: 50%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 24px;
+  }
+  }
+</style>
+<div class="page-wrapper">
+<!-- partial:partials/_navbar.html -->
+<%- include('../partials/_navbar.ejs') -%>
+<!-- partial -->
+<div class="page-content">
+  <div class="card container"  style="border-radius: 1rem;">
+    <div class="col-xl-12 main-content ps-xl-4 pe-xl-5">
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-lg-12">
+          <h2 class="m-b-md">API</h2>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td class="width-40">HTTP Method</td>
+                <td>POST</td>
+              </tr>
+              <tr>
+                <td>API URL</td>
+                <td><span id="domain_and_protocol"></span>/api/v2</td>
+              </tr>
+              <tr>
+                <td>API Key</td>
+                <td>********************************</td>
+              </tr>
+              <tr>
+                <td>Response format</td>
+                <td>JSON</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="m-t-md">
+            <strong>Service list</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>services</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript">
+                      <script type="script/prism-javascript">
+              [
+                  {
+                      "service": 1,
+                      "name": "Followers",
+                      "type": "Default",
+                      "category": "First Category",
+                      "rate": "0.90",
+                      "min": "50",
+                      "max": "10000",
+                      "refill": true,
+                      "cancel": true
+                  },
+                  {
+                      "service": 2,
+                      "name": "Comments",
+                      "type": "Custom Comments",
+                      "category": "Second Category",
+                      "rate": "8",
+                      "min": "10",
+                      "max": "1500",
+                      "refill": false,
+                      "cancel": true
+                  }
+              ]
+                                
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Add order</strong>
+          </h4>
+          <p>
+          <form class="form-inline">
+            <div class="form-group">
+              <select class="form-control input-sm" id="service_type">
+                <option value="0">Default</option>
+                <option value="10">Package</option>
+                <option value="2">Custom Comments</option>
+                <option value="14">Custom Comments Package</option>
+                <option value="17">Poll</option>
+                <option value="20">Invites from Groups</option>
+                <option value="100">Subscriptions</option>
+              </select>
+            </div>
+          </form>
+          </p>
+          <br>
+          <div id="type_0" style="display: block;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>link</td>
+                  <td>Link to page</td>
+                </tr>
+                <tr>
+                  <td>quantity</td>
+                  <td>Needed quantity</td>
+                </tr>
+                <tr>
+                  <td>runs (optional)</td>
+                  <td>Runs to deliver</td>
+                </tr>
+                <tr>
+                  <td>interval (optional)</td>
+                  <td>Interval in minutes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="type_10" style="display:none;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>link</td>
+                  <td>Link to page</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="type_2" style="display:none;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>link</td>
+                  <td>Link to page</td>
+                </tr>
+                <tr>
+                  <td>comments</td>
+                  <td>Comments list separated by \r\n or \n</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="type_100" style="display:none;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>username</td>
+                  <td>Username</td>
+                </tr>
+                <tr>
+                  <td>min</td>
+                  <td>Quantity min</td>
+                </tr>
+                <tr>
+                  <td>max</td>
+                  <td>Quantity max</td>
+                </tr>
+                <tr>
+                  <td>posts (optional)</td>
+                  <td>
+                    Use this parameter if you want to limit the number of new (future) posts that will be
+                    parsed and
+                    for which orders will be created. If posts parameter is not set, the subscription will
+                    be created
+                    for an unlimited number of posts.
+                  </td>
+                </tr>
+                <tr>
+                  <td>old_posts (optional)</td>
+                  <td>Number of existing posts that will be parsed and for which orders will be created, can
+                    be used if
+                    this option is available for the service.
+                  </td>
+                </tr>
+                <tr>
+                  <td>delay</td>
+                  <td>Delay in minutes. Possible values: 0, 5, 10, 15, 30, 60, 90, 120, 150, 180, 210, 240,
+                    270, 300,
+                    360, 420, 480, 540, 600
+                  </td>
+                </tr>
+                <tr>
+                  <td>expiry (optional)</td>
+                  <td>Expiry date. Format d/m/Y</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="type_14" style="display:none;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>link</td>
+                  <td>Link to page</td>
+                </tr>
+                <tr>
+                  <td>comments</td>
+                  <td>Comments list separated by \r\n or \n</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="type_17" style="display:none;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>link</td>
+                  <td>Link to page</td>
+                </tr>
+                <tr>
+                  <td>quantity</td>
+                  <td>Needed quantity</td>
+                </tr>
+                <tr>
+                  <td>answer_number</td>
+                  <td>Answer number of the poll</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="type_20" style="display:none;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="width-40">Parameters</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>key</td>
+                  <td>Your API key</td>
+                </tr>
+                <tr>
+                  <td>action</td>
+                  <td>add</td>
+                </tr>
+                <tr>
+                  <td>service</td>
+                  <td>Service ID</td>
+                </tr>
+                <tr>
+                  <td>link</td>
+                  <td>Link to page</td>
+                </tr>
+                <tr>
+                  <td>quantity</td>
+                  <td>Needed quantity</td>
+                </tr>
+                <tr>
+                  <td>groups</td>
+                  <td>Groups list separated by \r\n or \n</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              {
+                  "order": 23501
+              }
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Order status</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>status</td>
+              </tr>
+              <tr>
+                <td>order</td>
+                <td>Order ID</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              {
+                  "charge": "0.27819",
+                  "start_count": "3572",
+                  "status": "Partial",
+                  "remains": "157",
+                  "currency": "USD"
+              }
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Multiple orders status</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>status</td>
+              </tr>
+              <tr>
+                <td>orders</td>
+                <td>Order IDs separated by comma</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              {
+                  "1": {
+                      "charge": "0.27819",
+                      "start_count": "3572",
+                      "status": "Partial",
+                      "remains": "157",
+                      "currency": "USD"
+                  },
+                  "10": {
+                      "error": "Incorrect order ID"
+                  },
+                  "100": {
+                      "charge": "1.44219",
+                      "start_count": "234",
+                      "status": "In progress",
+                      "remains": "10",
+                      "currency": "USD"
+                  }
+              }
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Create refill</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>refill</td>
+              </tr>
+              <tr>
+                <td>order</td>
+                <td>Order ID</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              {
+                  "refill": "1"
+              }
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Create multiple refill</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>refill</td>
+              </tr>
+              <tr>
+                <td>orders</td>
+                <td>Order IDs (separated by a comma, up to 100 IDs)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              [
+                  {
+                      "order": 1,
+                      "refill": 1
+                  },
+                  {
+                      "order": 2,
+                      "refill": 2
+                  },
+                  {
+                      "order": 3,
+                      "refill": {
+                          "error": "Incorrect order ID"
+                      }
+                  }
+              ]
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Get refill status</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>refill_status</td>
+              </tr>
+              <tr>
+                <td>refill</td>
+                <td>Refill ID</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              {
+                  "status": "Completed"
+              }
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>Get multiple refill status</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>refill_status</td>
+              </tr>
+              <tr>
+                <td>refills</td>
+                <td>Refill IDs (separated by a comma, up to 100 IDs)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              [
+                  {
+                      "refill": 1,
+                      "status": "Completed"
+                  },
+                  {
+                      "refill": 2,
+                      "status": "Rejected"
+                  },
+                  {
+                      "refill": 3,
+                      "status": {
+                          "error": "Refill not found"
+                      }
+                  }
+              ]
+            </script> </code></pre>
+          </figure>
+          <h4 class="m-t-md">
+            <strong>User balance</strong>
+          </h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="width-40">Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>Your API key</td>
+              </tr>
+              <tr>
+                <td>action</td>
+                <td>balance</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-t-md">
+            <strong>Example response</strong>
+          </p>
+          <figure class="highlight" id="defaultGroup">
+            <pre class="language-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism"
+              data-adapter="dump_json" data-jsonp-status="loaded" tabindex="0"><code class="language-javascript"><script type="script/prism-javascript">
+              {
+                  "balance": "100.84292",
+                  "currency": "USD"
+              }
+            </script> </code></pre>
+          </figure>
+          <hr>
+          <div class="row">
+            <a href="/php_code" target="_blank" title="Php örnek kod" class="exampleCodes">
+            <img src="https://i.hizliresim.com/twcm2ge.png" alt="Php örnek kod" class="exampleCodesimg">
+            </a>
+            <a href="/nodejs_code" target="_blank" title="Nodejs örnek kod" class="exampleCodes">
+            <img src="https://i.hizliresim.com/qvf8g6h.png" alt="Npm örnek kod" class="exampleCodesimg">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- footer -->
+<%- include('../partials/_footer.ejs', { page: "api" }) -%>
+<!-- footer -->

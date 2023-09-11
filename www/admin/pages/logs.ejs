@@ -1,0 +1,63 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+			<div class="page-content">
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card"  style="border-radius: 1rem;">
+						<div class="card-body">
+							<h6 class="card-title">Loglar</h6>
+							<div class="table-responsive">
+							<table id="dataTableExample" class="table">
+								<thead>
+								<tr>
+									<th>User ID</th>
+									<th>IP</th>
+									<th>İşlem</th>
+									<th>Durum</th>
+									<th>Tarih</th>
+								</tr>
+								</thead>
+								<tbody>
+								<% if(logs.length == 0) { %>
+								<tr>
+									<td colspan="5" style="text-align: center;">Log Bulunamadı!</td>
+								</tr>
+								<% } %>
+								<% logs.forEach((item) => { %>
+								<tr>
+									<td style="width: 20%;">
+										<a href="/admin/users?user=<%= item.userID %>"><%= item.userID %></a>
+									</td>
+									<td><%= item.ip %></td>
+									<td><%= item.action %></td>
+									<td>
+										<% if(item.status == "Success") { %>
+											<span class="badge bg-success">Success</span>
+										<% } else { %>
+											<span class="badge bg-warning"><%= item.status %></span>
+										<% } %>
+									</td>
+									<td><%= item.date %></td>
+								</tr>
+								<% }); %>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+			<!-- footer -->

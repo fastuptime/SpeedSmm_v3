@@ -1,0 +1,18 @@
+// npm package: typeahead.js
+// github link: https://github.com/twitter/typeahead.js
+
+.typeahead.tt-input,
+.typeahead.tt-hint {
+  @extend .form-control;
+  background-color: $input-bg !important;
+  /*rtl:raw:
+  direction: rtl;
+  */
+}
+.tt-menu {
+  @extend .dropdown-menu;
+  .tt-suggestion {
+    @extend .dropdown-item;
+    cursor: pointer;
+  }
+}

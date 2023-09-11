@@ -1,0 +1,84 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+			<div class="page-content">
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card"  style="border-radius: 1rem;">
+						<div class="card-body">
+							<h6 class="card-title">Görünüm</h6>
+							<div class="table-responsive">
+							<table id="dataTableExample" class="table">
+								<thead>
+								<tr>
+									<th>Bağlantı</th>
+									<th>Menu Icon</th>
+									<th>Seo Açıklama</th>
+									<th>Düzenle</th>
+								</tr>
+								</thead>
+								<tbody id="table-body">
+								<% Object.values(pages).sort((a, b)=> a.queue - b.queue).forEach((item) => { %>
+								<tr draggable="true">
+									<td style="width: 10%;">
+										<a href="<%= config.siteUrl %><%= item.url %>" target="_blank"><%= item.url %></a> 
+									</td>
+									<td style="width: 10%;">
+										<%- item.icon %>
+									</td>
+									<td style="width: 75%;">
+										<%= item.description %>
+									</td>
+									<td style="width: 5%;">
+										<a href="/admin/pages/edit/<%= item.id %>"><i class="fa fa-edit"></i></a>
+									<td>
+								</tr>
+								<% }); %>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+				const tableBody = document.getElementById("table-body");
+
+					let draggingElement = null;
+
+					tableBody.addEventListener("dragstart", (e) => {
+						draggingElement = e.target.closest("tr");
+						e.dataTransfer.setData("text/plain", draggingElement.id);
+					});
+
+					tableBody.addEventListener("dragover", (e) => {
+						e.preventDefault();
+					});
+
+					tableBody.addEventListener("drop", (e) => {
+						e.preventDefault();
+						const droppedElement = e.target.closest("tr");
+						if (draggingElement && droppedElement) {
+							if (draggingElement !== droppedElement) {
+								if (draggingElement.compareDocumentPosition(droppedElement) === Node.DOCUMENT_POSITION_FOLLOWING) {
+									tableBody.insertBefore(draggingElement, droppedElement.nextSibling);
+								} else {
+									tableBody.insertBefore(draggingElement, droppedElement);
+								}
+							}
+						}
+						draggingElement = null;
+					});
+			</script>
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+			<!-- footer -->

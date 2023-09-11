@@ -1,0 +1,113 @@
+<%- include('../partials/_header.ejs') -%>
+<!-- sidebar -->
+<%- include('../partials/_sidebar.ejs') -%>
+<!-- sidebar -->
+<div class="page-wrapper">
+<!-- partial:partials/_navbar.html -->
+<%- include('../partials/_navbar.ejs') -%>
+<!-- partial -->
+<div class="page-content">
+   <div class="row col-md-12" style="margin-bottom: 20px;">
+      <div class="form-group" style="margin-right: 10px; margin-left: 10px;">
+         <label for="category">Görüntüle :</label>
+         <select class="form-control" id="category" name="category">
+            <option value="register">Yeni Üye</option>
+            <option value="login">Girişler</option>
+            <option value="order">Verilen Siparişler</option>
+            <option value="ticket">Destek Biletleri</option>
+            <option value="balance">Yüklenen Bakiye</option>
+            <option value="spent">Harcanan Bakiye</option>
+            <option value="net">Net Kar</option>
+         </select>
+      </div>
+   </div>
+   <script>
+      document.getElementById('category').addEventListener('change', function () {
+          var category = this.value;
+          var url = window.location.href;
+          var newUrl = url.split('?')[0] + '?category=' + category;
+          window.location.href = newUrl;
+      });
+      let url = new URL(window.location.href);
+      let category = url.searchParams.get("category");
+      if (category) {
+          document.getElementById('category').value = category;
+      } else {
+          document.getElementById('category').value = 'register';
+      }
+   </script>
+   <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+         <div class="card" style="border-radius: 1rem;">
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th>Gün</th>
+                           <th>Ocak</th>
+                           <th>Şubat</th>
+                           <th>Mart</th>
+                           <th>Nisan</th>
+                           <th>Mayıs</th>
+                           <th>Haziran</th>
+                           <th>Temmuz</th>
+                           <th>Ağustos</th>
+                           <th>Eylül</th>
+                           <th>Ekim</th>
+                           <th>Kasım</th>
+                           <th>Aralık</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <% var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; %>
+                        <% var categories=data.map(item=> item.category); %>
+                        <% var totals=new Array(months.length).fill(0); %>
+                        <% for (var day=1; day <=31; day++) { %>
+                        <tr>
+                           <td>
+                              <%= day %>
+                           </td>
+                           <% for (var i=0; i < months.length; i++) { %>
+                           <% var value=0; %>
+                           <% for (var j=0; j < categories.length; j++) { %>
+                           <% var category=categories[j]; %>
+                           <% var categoryData=data.find(item=> item.category === category); %>
+                           <% var yearlyData=categoryData.yearly; %>
+                           <% var monthlyData=yearlyData.monthly.find(month=> month.month ===
+                              months[i]); %>
+                           <% if (monthlyData) { %>
+                           <% var currentYear=new Date().getFullYear(); %>
+                           <% var dailyData=monthlyData.daily.find(daily=> daily.date
+                              === (day + ' ' + months[i] + ' ' + currentYear)); %>
+                           <% if (dailyData) { %>
+                           <% value +=dailyData.value; %>
+                           <% } %>
+                           <% } %>
+                           <% } %>
+                           <% totals[i] +=value; %>
+                           <td>
+                              <%= value %>
+                           </td>
+                           <% } %>
+                        </tr>
+                        <% } %>
+                        <tr>
+                           <td>Toplam</td>
+                           <% for (var i=0; i < totals.length; i++) { %>
+                           <td>
+                              <strong><%= totals[i] %></strong>
+                           </td>
+                           <% } %>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- footer -->
+<%- include('../partials/_footer.ejs', { page: "statistics" }) -%>
+<!-- footer -->

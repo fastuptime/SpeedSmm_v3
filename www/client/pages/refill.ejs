@@ -1,0 +1,84 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+      <div class="page-content">
+      
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card"  style="border-radius: 1rem;">
+              <div class="card-body">
+                <h6 class="card-title"><%= __("refill.page.title") %></h6>
+                <div class="table-responsive">
+                  <table id="dataTableExample" class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th><%= __("refill.page.date") %></th>
+                        <th><%= __("refill.page.orderID") %></th>
+                        <th><%= __("refill.page.link") %></th>
+                        <th><%= __("refill.page.serviceName") %></th>
+                        <th><%= __("refill.page.status") %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if(refillx.length == 0) { %>
+                      <tr>
+                        <td colspan="9" style="text-align: center;"><%= __("refill.page.noRefill") %></td>
+                      </tr>
+                      <% } %>
+                    <% refillx.forEach(refill => { %>
+                      <tr>
+                        <td><%= refill.refillID %></td>
+                        <td id="refill_<%= refill._id %>">
+                          <script>
+                            document.getElementById("refill_" + "<%= refill._id %>").innerHTML = new Date((typeof "<%= refill.date %>" === "string" ? new Date("<%= refill.date %>") : "<%= refill.date %>").toLocaleString("en-US", { timeZone: "<%= timezone %>" })).toLocaleString();
+                          </script>
+                        </td>
+                        <td>
+                          <a href="<%= sitePages.refill.url %>?searchid=<%= refill.orderID %>">
+                            <%= refill.orderID %>
+                          </a>
+                        </td>
+                        <td>
+                          <a href="<%= refill.url %>" target="_blank">
+                            <%= refill.link %>
+                          </a>
+                        </td>
+                        <td><%= refill.serviceName %></td>
+                        <td>
+                          <% if(refill.status == "pending") { %>
+                            <span class="badge badge-warning"><%= __("refill.page.pending") %></span>
+                          <% } else if(refill.status == "completed") { %>
+                            <span class="badge badge-success"><%= __("refill.page.completed") %></span>
+                          <% } else if(refill.status == "cancelled") { %>
+                            <span class="badge badge-danger"><%= __("refill.page.cancelled") %></span>
+                          <% } else if(refill.status == "processing") { %>
+                            <span class="badge badge-info"><%= __("refill.page.processing") %></span>
+                          <% } else if(refill.status == "partial") { %>
+                            <span class="badge badge-primary"><%= __("refill.page.partial") %></span>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "refill" }) -%>
+			<!-- footer -->

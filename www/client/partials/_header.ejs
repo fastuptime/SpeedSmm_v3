@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="<%= siteData.site.integrations.seo.description %>">
+    <meta name="author" content="Can">
+    <meta name="keywords"
+        content="<%= siteData.site.integrations.seo.keywords %>">
+
+    <title><%= siteData.site.integrations.seo.name %> - <%= __("sidebar." + page.i18n) %></title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- core:css -->
+    <link rel="stylesheet" href="/client_assets/vendors/core/core.css">
+    <!-- endinject --> 
+
+    <!-- Plugin css for this page -->
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="/client_assets/vendors/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="/client_assets/vendors/jquery-steps/jquery.steps.css">
+    <link rel="stylesheet" href="/client_assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/client_assets/fonts/feather-font/css/iconfont.css">
+    <link rel="stylesheet" href="/client_assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <!-- endinject -->
+	<link rel="stylesheet" href="/client_assets/vendors/prismjs/themes/prism-solarizedlight.css">
+    <style>#scroll::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius: 10px;}#scroll::-webkit-scrollbar{width: 12px;}#scroll::-webkit-scrollbar-thumb{border-radius: 10px;-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);background-image: -webkit-linear-gradient(330deg, #5368c7 0%, #5f6ac4 50%, #6a6cc1 100%);}</style>
+
+    <!-- Layout styles -->
+    <% if(theme == 'dark') { %>
+    <link rel="stylesheet" href="/client_assets/css/demo2/style.css">
+    <% } else { %>
+    <link rel="stylesheet" href="/client_assets/css/demo1/style.css">
+    <% } %>
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" href="<%= siteData.site.favicon %>" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <% if(siteData.site.integrations.captcha.status && !siteData.site.integrations.captcha.service) { %>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <% } else if(siteData.site.integrations.captcha.status && siteData.site.integrations.captcha.service) { %>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <% } %>
+
+    <%- siteData.site.code.header %>
+
+    <% if(siteData.site.integrations.googleAnalytics.status) { %>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <%- siteData.site.integrations.googleAnalytics.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.googleTagManager.status) { %>
+        <!-- Google Tag Manager -->
+        <%- siteData.site.integrations.googleTagManager.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.beamer.status) { %>
+        <!-- Beamer -->
+        <%- siteData.site.integrations.beamer.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.getSiteControl.status) { %>
+        <!-- getSiteControl -->
+        <%- siteData.site.integrations.getSiteControl.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.jivoChat.status) { %>
+        <!--jivoChat-->
+        <%- siteData.site.integrations.jivoChat.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.tawkTo.status) { %>
+        <!--tawkTo-->
+        <%- siteData.site.integrations.tawkTo.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.oneSignal.status) { %>
+        <!--oneSignal-->
+        <%- siteData.site.integrations.oneSignal.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.pushAlert.status) { %>
+        <!--pushAlert-->
+        <%- siteData.site.integrations.pushAlert.code %>
+    <% } %>
+
+    <% if(siteData.site.integrations.smartUpp.status) { %>
+        <!--smartUpp-->
+        <%- siteData.site.integrations.smartUpp.code %>
+    <% } %>
+</head>
+
+<body id="scroll">
+    <div class="main-wrapper">

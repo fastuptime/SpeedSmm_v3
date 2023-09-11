@@ -1,0 +1,218 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+          <div>
+            <h4 class="mb-3 mb-md-0"><%= __("newOrder.page.welcometitle", {name: user.name}) %></h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-xl-12 stretch-card">
+            <div class="row flex-grow-1">
+              <div class="col-md-3 grid-margin stretch-card">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <h6 class="card-title mb-0"><%= __("newOrder.page.updateBalance") %></h6>
+                    </div>
+                    <h3 class="mb-2" style="padding-top: 14px;">
+                      <span id="mainPageuserBalance"></span><%- user_currency %>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 grid-margin stretch-card">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <h6 class="card-title mb-0">
+                        <%= __("newOrder.page.spentBalance") %>
+                      </h6>
+                    </div>
+                    <h3 class="mb-2" style="padding-top: 14px;">
+                      <span id="mainPageuserSpent"></span> <%- user_currency %>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 grid-margin stretch-card">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <h6 class="card-title mb-0">
+                        <%= __("newOrder.page.balanceStatus") %>
+                      </h6>
+                    </div>
+                    <h3 class="mb-2" style="padding-top: 14px;">
+                      <% if(user.balance < 100) { %>
+                          <%= __("newOrder.page.balanceStatusLow") %>
+                      <% } else if(user.balance < 500) { %>
+                          <%= __("newOrder.page.balanceStatusMedium") %>
+                      <% } else { %>
+                        <%= __("newOrder.page.balanceStatusHigh") %>
+                      <% } %>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 grid-margin stretch-card">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <h6 class="card-title mb-0">
+                        <%= __("newOrder.page.totalOrders") %>
+                      </h6>
+                    </div>
+                    <h3 class="mb-2" style="padding-top: 14px;">
+                      <%= totalOrders %>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div> <!-- row -->
+
+        <!-- Sipariş -->
+        <div class="row">
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card"  style="border-radius: 1rem;">
+              <div class="card-body">
+                <h4 class="card-title" style="padding-bottom: 10px; font-size: 1rem;"><%- __("newOrder.page.newOrder.icon") %> <%= __("newOrder.page.newOrder") %></h4>
+                <hr class="mb-4">
+                <form id="signupForm">
+
+                  <div class="mb-3">
+                    <label for="platform" class="form-label"><%= __("newOrder.page.platform") %></label>
+                    <select class="js-example-basic-single3 form-select" data-width="100%" name="platform" id="newOrderPlatform">
+                      <% if(platforms.length == 0) { %>
+                        <option value="0"><%= __("newOrder.page.noPlatform") %></option>
+                      <% } %>
+                      <% Object.values(platforms).sort((a, b)=> a.queue - b.queue).forEach((item) => { %>
+                        <option value="<%= item.id %>"><%= item.name %></option>
+                      <% }); %> 
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="category" class="form-label"><%= __("newOrder.page.category") %></label>
+                    <select class="js-example-basic-single form-select" data-width="100%" name="category" id="newOrderCategory">
+                        <option value="0"><%= __("newOrder.page.noCategory") %></option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="service" class="form-label"><%= __("newOrder.page.service") %></label>
+                    <select class="js-example-basic-single form-select" data-width="100%" name="service" id="newOrderService">
+                      <option value="0"><%= __("newOrder.page.noService") %></option>
+                    </select>
+                  </div>
+                  
+                  <div class="mb-3" id="newOrderQuantityDiv">
+                    <label for="description" class="form-label"><%= __("newOrder.page.description") %></label>
+                    <div class="form-control" name="description" id="newOrderDescription" rows="3" style="height: 100px; overflow: auto;" disabled></div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="link" class="form-label"><%= __("newOrder.page.link") %></label>
+                    <input type="text" class="form-control" name="link" id="newOrderLink">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="quantity" class="form-label"><%= __("newOrder.page.quantity") %></label>
+                    <input type="number" class="form-control" name="quantity" id="newOrderQuantity" step="10" value="10">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="price" class="form-label"><%= __("newOrder.page.price", {currency: siteData.site.currency}) %></label>
+                    <input type="number" class="form-control" name="price" id="newOrderPrice" disabled>
+                  </div>
+
+                  <% if(siteData.site.salesAgreement) { %>
+                    <div class="mb-3">
+                      <div class="form-check">
+                        <label class="form-check-label" for="termsCheck">
+                          <%- __("newOrder.page.termsAgree", {termsUrl: sitePages.terms.url}) %>
+                        </label>
+                        <input type="checkbox" class="form-check-input" name="terms_agree" id="termsCheck">
+                      </div>
+                    </div>
+                  <% } %>
+                  <p class="text-muted">
+                    <%= __("newOrder.page.responsibility") %>
+                  </p><br>
+
+                  <button type="submit" class="btn btn-primary col-12" id="newOrderButton"><%= __("newOrder.page.createBtn") %></button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card"  style="border-radius: 1rem;">
+              <div class="card-body">
+                <div id="wizard">
+                  <!--
+                    Duyuru,
+                    Güncelleme,
+                    SSS,
+                    Hakkımızda,
+                  -->
+                  <h2><%= __("newOrder.page.announcements") %></h2>
+                  <section>
+                    <h4><%= __("newOrder.page.announcements") %></h4>
+                    <p>
+                      <%= __("newOrder.page.announcementsText") %>
+                    </p>
+                  </section>
+              
+                  <h2><%= __("newOrder.page.updates") %></h2>
+                  <section>
+                    <h4><%= __("newOrder.page.updates") %></h4>
+                    <p>
+                      <%- __("newOrder.page.updatesText") %></p>
+                  </section>
+              
+                  <h2><%= __("newOrder.page.faq") %></h2>
+                  <section>
+                    <h4><%= __("newOrder.page.faq") %></h4>
+                    <p>
+                      <%= __("newOrder.page.faqText") %>
+                    </p>
+                  </section>
+              
+                  <h2><%= __("newOrder.page.about") %></h2>
+                  <section>
+                    <h4><%= __("newOrder.page.about") %></h4><br>
+                    <p>
+                      <%= __("newOrder.page.aboutText") %>
+                    </p>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- Sipariş -->
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "newOrder" }) -%>
+			<!-- footer -->

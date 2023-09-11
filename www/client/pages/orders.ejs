@@ -1,0 +1,97 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+      <div class="page-content">
+      
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card"  style="border-radius: 1rem;">
+              <div class="card-body">
+                <h6 class="card-title"><%= __("orders.page.title") %></h6>
+                <p class="text-muted mb-3"><%= __("orders.page.description") %></p>
+                <div class="table-responsive">
+                  <table id="dataTableExample" class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th><%= __("orders.page.table.date") %></th>
+                        <th><%= __("orders.page.table.link") %></th>
+                        <th><%= __("orders.page.table.charge") %></th>
+                        <th><%= __("orders.page.table.startCount") %></th>
+                        <th><%= __("orders.page.table.quantity") %></th>
+                        <th><%= __("orders.page.table.service") %></th>
+                        <th><%= __("orders.page.table.remains") %></th>
+                        <th><%= __("orders.page.table.refill") %></th>
+                        <th><%= __("orders.page.table.status") %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if(ordersx.length == 0) { %>
+                      <tr>
+                        <td colspan="10" style="text-align: center;"><%- __("orders.page.table.noOrders", {newOrderUrl: sitePages.newOrder.url}) %></td>
+                      </tr>
+                      <% } %>
+                    <% ordersx.forEach(order => { %>
+                      <tr>
+                        <td><%= order.id %></td>
+                        <td id="orders_<%= order._id %>">
+                          <script>
+                            document.getElementById("orders_" + "<%= order._id %>").innerHTML = new Date((typeof "<%= order.date %>" === "string" ? new Date("<%= order.date %>") : "<%= order.date %>").toLocaleString("en-US", { timeZone: "<%= timezone %>" })).toLocaleString();
+                          </script>
+                        </td>
+                        <td>
+                          <a href="<%= order.order.url %>" target="_blank"><%= order.charge.order.url %></a>
+                        </td>
+                        <td><%= order.price.amount %> (<%= order.price.currency %>)</td>
+                        <td><%= order.order.startCount %></td>
+                        <td><%= order.order.quantity %></td>
+                        <td><%= order.service.name %></td>
+                        <td><%= order.order.remain %></td>
+                        <td>
+                          <% if(order.order.refill) { %>
+                            <a class="btn btn-success btn-sm" href="<%= sitePages.refill.url %>?refill=<%= order.order.id %>">
+                              <%= __("orders.page.table.refill") %>
+                            </a>
+                          <% } else { %>
+                            <span>#</span>
+                          <% } %>
+                        </td>
+                        <td>
+                          <span>
+                            <% if(order.order.status == "pending") { %>
+                            <%= __("orders.page.table.statuses.pending") %>
+                            <% } else if(order.order.status == "processing") { %>
+                            <%= __("orders.page.table.statuses.processing") %>
+                            <% } else if(order.order.status == "completed") { %>
+                            <%= __("orders.page.table.statuses.completed") %>
+                            <% } else if(order.order.status == "cancelled") { %>
+                            <%= __("orders.page.table.statuses.cancelled") %>
+                            <% } else if(order.order.status == "partial") { %>
+                            <%= __("orders.page.table.statuses.partiallyCompleted") %>
+                            <% } %>
+                          </span>
+                        </td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+			<!-- footer -->

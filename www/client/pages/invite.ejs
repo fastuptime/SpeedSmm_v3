@@ -1,0 +1,120 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+
+        <div class="row">
+          <div class="col-md-6">
+
+          <div class="stretch-card" style="margin-bottom: 20px;">
+            <div class="card" style="border-radius: 1rem; padding: 20px;">
+              <div class="card-body">
+          
+                <div class="row" style="margin-bottom: 10px;">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.referralLink") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <span id="reff"></span>/ref/<%= user.ref.ref_code %>
+                  </p>
+                </div>
+                <hr>
+          
+                <div class="row" style="margin-bottom: 10px;">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.referralBonus") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <%= siteData.site.modules.referral.bonus %>%
+                  </p>
+                </div>
+                <hr>
+          
+                <div class="row">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.minWithdraw") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <%= siteData.site.modules.referral.minWithdraw %> <%- siteData.site.currency %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stretch-card">
+            <div class="card" style="border-radius: 1rem; padding: 20px;">
+              <div class="card-body">
+
+                <div class="row" style="margin-bottom: 10px;">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.clicks") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <%= user.ref.clicks %>
+                  </p>
+                </div>
+                <hr>
+
+                <div class="row" style="margin-bottom: 10px;">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.registered") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <%= user.ref.reffered %>
+                  </p>
+                </div>
+                <hr>
+
+                <div class="row" style="margin-bottom: 10px;">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.earned") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <%= user.ref.earned %> <%- siteData.site.currency %>
+                  </p>
+                </div>
+                <hr>
+
+                <div class="row" style="margin-bottom: 10px;">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.withdraw") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <%= user.ref.withdraw %> <%- siteData.site.currency %>
+                  </p>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <p class="col-lg-6" style="font-weight: bold;"><%= __("invite.page.withdrawRequest") %>:</p>
+                  <p class="col-lg-6 text-muted" style="text-align: right;">
+                    <button type="button" class="btn btn-primary btn-sm">
+                      <a href="#" style="color: white;"><%= __("invite.page.withdrawRequest") %></a>
+                    </button>
+                  </p>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+          </div>
+
+          <div class="col-md-6 grid-margin stretch-card">
+            <div class="card" style="border-radius: 1rem; padding: 20px;">
+              <h4 class="card-title" style="font-size: 1rem;">
+                <span class="ixir">
+                  <i class="fa-solid fa-question"></i>
+                </span>&nbsp;&nbsp;
+                <%= __("invite.page.howItWorks") %>
+              </h4>
+              <hr style="margin-top: 0">
+              <div class="card-body">
+                <%- siteData.site.text.invite %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "invite" }) -%>
+			<!-- footer -->

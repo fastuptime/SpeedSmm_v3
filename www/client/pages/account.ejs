@@ -1,0 +1,142 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+				<div class="row">
+
+					<div class="col-md-6">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card" style="border-radius: 1rem;">
+								<div class="card-body">
+						
+									<div class="row">
+										<div class="mb-3 col-md-12">
+											<label for="username" class="form-label">
+												<%= __("account.page.username") %>
+											</label>
+											<input type="text" class="form-control" name="username" value="<%= user.username %>" disabled>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card" style="border-radius: 1rem;">
+								<div class="card-body">
+						
+									<div class="row">
+										<div class="mb-3 col-md-12">
+											<label for="current_password" class="form-label">
+												<%= __("account.page.currentPassword") %>
+											</label>
+											<input type="password" class="form-control" name="current_password">
+										</div>
+						
+										<div class="mb-3 col-md-12">
+											<label for="password" class="form-label">
+												<%= __("account.page.password") %>
+											</label>
+											<input type="password" class="form-control" name="password">
+										</div>
+						
+										<div class="mb-3 col-md-12">
+											<label for="password_confirmation" class="form-label">
+												<%= __("account.page.password_confirmation") %>
+											</label>
+											<input type="text" class="form-control" name="password_confirmation">
+										</div>
+						
+										<div class="mb-3">
+											<button class="btn btn-primary col-md-12">
+												<%= __("account.page.changePassword") %>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card" style="border-radius: 1rem;">
+								<div class="card-body">
+					
+									<div class="row">
+										<div class="mb-3 col-md-12">
+											<label for="language" class="form-label">
+												<%= __("account.page.language") %>
+											</label>
+											<input type="text" class="form-control" name="language" value="<%= lang.name %>" disabled>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card" style="border-radius: 1rem;">
+								<div class="card-body">
+						
+									<div class="row">
+										<div class="mb-3 col-md-12">
+											<label for="timezone" class="form-label">
+												<%= __("account.page.timezone") %>
+											</label>
+											<select class="form-control" name="timezone">
+												<% timezones.forEach((timezone) => { %>
+													<option value="<%= timezone %>" <%= timezone == user.timezone ? "selected" : "" %>><%= timezone %></option>
+												<% }); %>
+											</select>
+										</div>
+
+										<div class="mb-3">
+											<button class="btn btn-primary col-md-12">
+												<%= __("account.page.save") %>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card" style="border-radius: 1rem;">
+								<div class="card-body">
+						
+									<div class="row">
+										<div class="mb-3 col-md-12">
+											<label for="api_key" class="form-label">
+												<%= __("account.page.apiKey") %>
+											</label>
+											<input type="text" class="form-control" value="********************************" disabled title=" <%= __("account.page.securityReason") %>">
+										</div>
+						
+										<div class="mb-3">
+											<button class="btn btn-primary col-md-12">
+												<%= __("account.page.refresh") %>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "account" }) -%>
+			<!-- footer -->

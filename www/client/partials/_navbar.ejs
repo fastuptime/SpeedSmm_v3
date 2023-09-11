@@ -1,0 +1,159 @@
+<nav class="navbar">
+				<a href="#" class="sidebar-toggler">
+					<i data-feather="menu"></i>
+				</a>
+				<div class="navbar-content">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="flag-icon flag-icon-<%= lang.flag %> mt-1" title="<%= lang.code %>"></i> <span class="ms-1 me-1 d-none d-md-inline-block"><%= lang.name %></span>
+							</a>
+              <!-- i18n -->
+              <div class="dropdown-menu" aria-labelledby="languageDropdown">
+              <% langs.forEach((item)=> { %>
+                  <% if(item.code != lang.code) { %>
+                    <a href="?lang=<%= item.code %>" class="dropdown-item py-2"><i class="flag-icon flag-icon-<%= item.flag %>" title="<%= item.code %>" id="<%= item.code %>"></i> <span class="ms-1"> <%= item.name %> </span></a>
+                  <% } %>
+              <% }); %>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="<%= sitePages.newOrder.url %>">
+                <%- sitePages.newOrder.icon %>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="#" id="themeChange">
+                <% if(theme == 'dark') { %>
+                  <i data-feather="moon"></i>
+                <% } else { %>
+                  <i data-feather="sun"></i>
+                <% } %>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="<%= sitePages.support.url %>">
+                <%- sitePages.support.icon %>
+              </a>
+            </li>
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i data-feather="bell"></i>
+								<div class="indicator">
+									<div class="circle"></div>
+								</div>
+							</a>
+							<div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
+								<div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
+									<p><%= __("navbar.notifications", {count: notifications.length}) %></p>
+								</div>
+                <div class="p-1">
+                  <% notifications.forEach(item => { %>
+                  <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
+                    <!-- <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+											<i class="icon-sm text-white" data-feather="gift"></i>
+                    </div> -->
+                    <div class="flex-grow-1 me-2">
+											<p><%= item.title %></p>
+											<p class="tx-12 text-muted"><%= item.message %></p>
+                      <span class="tx-12 text-muted" id="notifications_<%= item._id %>"></span>
+                    </div>
+                    <script>
+                      document.getElementById("notifications_" + "<%= item._id %>").innerHTML = new Date((typeof "<%= item.date %>" === "string" ? new Date("<%= item.date %>") : "<%= item.date %>").toLocaleString("en-US", { timeZone: "<%= timezone %>" })).toLocaleString();
+                    </script>
+                  </a>
+                  <% }); %>
+                </div>
+								<div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
+									<a onclick="markAllAsRead()" href="javascript:;" class="text-primary"><%= __("navbar.markAllAsRead") %></a>
+								</div>
+							</div>
+						</li>
+
+
+            <li class="nav-item dropdown">
+              <button class="nav-link dropdown-toggle btn btn-primary" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="usercurrencyDropdown"
+                style="color: white; padding: 3px 10px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                <span id="userBalance"></span> <%- user_currency %>
+							</button>
+              <!-- i18n -->
+              <div class="dropdown-menu" aria-labelledby="usercurrencyDropdown" id="usercurrencyDropdown2">
+              </div>
+            </li>
+            <script>
+              let currencys = [
+                {
+                  name: "TRY ₺",
+                  code: "TRY"
+                },
+                {
+                  name: "USD $",
+                  code: "USD"
+                },
+                {
+                  name: "EUR €",
+                  code: "EUR"
+                },
+                {
+                  name: "RUB ₽",
+                  code: "RUB"
+                },
+                {
+                  name: "INR ₹",
+                  code: "INR"
+                }
+              ];
+              document.getElementById("usercurrencyDropdown2").innerHTML = "";
+              currencys.forEach(x => {
+                if(x.code != "<%= user_currency %>") {
+                  document.getElementById("usercurrencyDropdown2").innerHTML += '<a href="?usercurrency=' + x.code + '" class="dropdown-item py-2"><span class="ms-1">' + x.name + '</span></a>';
+                }
+              });
+            </script>
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="wd-30 ht-30 rounded-circle" src="<%= siteData.site.favicon %>" style="border: 1px solid #6a9e6a;" alt="">
+							</a>
+							<div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
+								<div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+									<div class="mb-3">
+										<img class="wd-80 ht-80 rounded-circle" src="<%= siteData.site.favicon %>" alt="">
+									</div>
+									<div class="text-center">
+										<p class="tx-16 fw-bolder"><%= user.name %> <%= user.surname %></p>
+                    <p class="tx-12 text-muted">@<%= user.username %></p>
+									</div>
+								</div>
+                <ul class="list-unstyled p-1">
+                  <li class="dropdown-item py-2">
+                    <a href="<%= sitePages.account.url %>" class="text-body ms-0">
+                      <center>
+                        <%= __("sidebar." + sitePages.account.i18n) %>
+                      </center>
+                    </a>
+                  </li>
+                  <li class="dropdown-item py-2">
+                    <a href="<%= sitePages.balance_load.url %>" class="text-body ms-0">
+                        <center>
+                          <%= __("sidebar." + sitePages.balance_load.i18n) %>
+                        </center>
+                    </a>
+                  </li>
+                  <li class="dropdown-item py-2">
+                    <a href="<%- sitePages.logout.url %>" class="text-body ms-0">
+                     <center>
+                      <%= __("sidebar." + sitePages.logout.i18n) %>
+                     </center>
+                    </a>
+                  </li>
+                </ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>

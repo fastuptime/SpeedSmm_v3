@@ -1,0 +1,38 @@
+<nav class="navbar">
+				<a href="#" class="sidebar-toggler">
+					<i data-feather="menu"></i>
+				</a>
+				<div class="navbar-content">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="flag-icon flag-icon-<%= lang.flag %> mt-1" title="<%= lang.code %>"></i> <span class="ms-1 me-1 d-none d-md-inline-block"><%= lang.name %></span>
+							</a>
+              <!-- i18n -->
+              <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                  <% if(lang.code != 'tr') { %>
+                    <a href="?lang=tr" class="dropdown-item py-2"><i class="flag-icon flag-icon-tr" title="tr" id="tr"></i> <span class="ms-1"> Türkçe</span></a>
+                  <% } else { %>
+                    <a href="?lang=en" class="dropdown-item py-2"><i class="flag-icon flag-icon-us" title="en" id="en"></i> <span class="ms-1"> English</span></a>
+                  <% } %>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="#" id="themeChange">
+                <% if(theme == 'dark') { %>
+                  <i data-feather="moon"></i>
+                <% } else { %>
+                  <i data-feather="sun"></i>
+                <% } %>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="/" style="font-size: 16px;">
+                <%= __("admin.navbar.eyesite") %> <i class="fa-solid fa-eye "></i>
+              </a>
+            </li>
+					</ul>
+				</div>
+			</nav>

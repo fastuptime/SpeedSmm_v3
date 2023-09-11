@@ -1,0 +1,208 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+
+			<div class="page-content">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card" style="border-radius: 1rem;">
+                <div class="card-body">
+
+                  <div class="row">
+
+                    <div class="mb-3 col-md-12">
+                      <label for="method" class="form-label">
+                        <%= __("balance_load.page.method") %>
+                      </label>
+                      <select class="form-control" name="method" id="method">
+                        <% if(Object.values(siteData.virtualPos).filter(x => x.status).length == 0) { %>
+                          <option value="0">
+                            <%= __("balance_load.page.noPaymentMethod") %>
+                          </option>
+                        <% } else { %>
+                          <option value="0">
+                            <%= __("balance_load.page.selectPaymentMethod") %>
+                          </option>
+                        <% } %>
+                        <% Object.values(siteData.virtualPos).forEach((item)=> { %>
+                          <% if(item.status) { %>
+                            <option value="<%= item.pos %>">
+                              <%= item.name %>
+                            </option>
+                          <% } %>
+                        <% }); %>
+                      </select>
+                    </div>
+
+                    <div class="mb-3 col-md-12">
+                      <label for="quantity" class="form-label">
+                        <%= __("balance_load.page.quantity") %>
+                      </label>
+                      <input type="number" class="form-control" name="quantity" min="1" id="min_max">
+                    </div>
+
+                    <div class="mb-3 col-md-12">
+                      <label for="phone" class="form-label">
+                        <%= __("balance_load.page.phone") %>
+                      </label>
+                      <input type="text" class="form-control" name="phone" value="<%= user.phone.number %>">
+                    </div>
+
+                    <input type="hidden" name="commissionx" id="commissionx">
+
+                    <div class="mb-3 col-md-12">
+                      <label for="commission" class="form-label">
+                        <%= __("balance_load.page.commission") %>
+                      </label>
+                      <input type="text" class="form-control" name="commission" disabled id="commission">
+                    </div>
+
+                    <div class="mb-3 col-md-12">
+                      <label for="total" class="form-label">
+                        <%= __("balance_load.page.total") %>
+                      </label>
+                      <input type="text" class="form-control" name="total" id="total" disabled>
+                    </div>
+
+                    <div class="mb-3">
+                      <button class="btn btn-primary col-md-12"> <%= __('balance_load.page.securePayment') %></button>
+                    </div>
+                    <div class="mb-3">
+                      <button class="btn btn-secondary col-md-12"><%= __('balance_load.page.paymentNotification') %></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card" style="border-radius: 1rem; padding: 20px;">
+                <h4 class="card-title" style="font-size: 1rem;">
+                  <span class="ixir">
+                    <i class="fa-solid fa-coins"></i>
+                  </span>&nbsp;&nbsp;
+                  <%= __("balance_load.page.otherPaymentMethods") %>
+                </h4>
+                <hr style="margin-top: 0">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="dataTableExample" class="table">
+                      <thead>
+                        <tr>
+                          <th><%= __("balance_load.page.bank") %></th>
+                          <th><%= __("balance_load.page.branchCode") %></th>
+                          <th><%= __("balance_load.page.accountNumber") %></th>
+                          <th><%= __("balance_load.page.iban") %></th>
+                          <th><%= __("balance_load.page.accountName") %></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(siteData.banksAccounts.length==0) { %>
+                          <tr>
+                            <td colspan="9" style="text-align: center;"><%= __("balance_load.page.noBankAccount") %></td>
+                          </tr>
+                          <% } %>
+                            <% siteData.banksAccounts.forEach((item)=> { %>
+                              <tr>
+                                <td>
+                                  <%= item.bankName %>
+                                </td>
+                                <td>
+                                  <%= item.branchCode %>
+                                </td>
+                                <td>
+                                  <%= item.accountNumber %>
+                                </td>
+                                <td>
+                                  <%= item.iban %>
+                                </td>
+                                <td>
+                                  <%= item.accountName %>
+                                </td>
+                            <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="border-radius: 1rem; padding: 20px;">
+              <h4 class="card-title" style="font-size: 1rem;">
+                <span class="ixir">
+                <i class="fa-sharp fa-solid fa-file-contract" style="padding-left: 3px;"></i>
+                </span>&nbsp;&nbsp;
+                <%= __("balance_load.page.paymentHistory") %>
+              </h4>
+              <hr style="margin-top: 0">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="dataTableExample" class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th><%= __("balance_load.page.date") %></th>
+                        <th><%= __("balance_load.page.method") %></th>
+                        <th>
+                          <%= __("balance_load.page.oldBalance") %>
+                        </th>
+                        <th><%= __("balance_load.page.amount") %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if(histroyBalance.length==0) { %>
+                        <tr>
+                          <td colspan="9" style="text-align: center;"><%= __("balance_load.page.noPaymentHistory") %></td>
+                        </tr>
+                        <% } %>
+                          <% histroyBalance.forEach((item)=> { %>
+                            <tr>
+                              <td>
+                                <%= item.id %>
+                              </td>
+                              <td>
+                                <span id="histroyBalance_<%= item._id %>"></span>
+                                <script>
+                                  document.getElementById("histroyBalance_" + "<%= item._id %>").innerHTML = new Date((typeof "<%= item.date %>" === "string" ? new Date("<%= item.date %>") : "<%= item.date %>").toLocaleString("en-US", { timeZone: "<%= timezone %>" })).toLocaleString();
+                                </script>
+                              </td>
+                              <td>
+                                <%= item.method %>
+                              </td>
+                              <td>
+                                <%= item.oldBalance %>
+                              </td>
+                              <td>
+                                <%= item.amount %> (<%= item.currency %>)
+                              </td>
+                              <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "balance_load" }) -%>
+			<!-- footer -->

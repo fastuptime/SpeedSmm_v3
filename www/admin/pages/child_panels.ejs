@@ -1,0 +1,110 @@
+<%- include('../partials/_header.ejs') -%>
+
+		<!-- sidebar -->
+    <%- include('../partials/_sidebar.ejs') -%>
+		<!-- sidebar -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+      <%- include('../partials/_navbar.ejs') -%>
+			<!-- partial -->
+			<div class="page-content">
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card"  style="border-radius: 1rem;">
+						<div class="card-body">
+							<h6 class="card-title">Child Panels</h6>
+							<div class="table-responsive">
+							<table id="dataTableExample" class="table">
+								<thead>
+								<tr>
+									<th>ID</th>
+									<th>User ID</th>
+									<th>Domain</th>
+									<th>Durum</th>
+									<th>Admin Adı/Şifresi</th>
+									<th>Oluşturma Tarihi</th>
+									<th>Sonraki Ödeme Tarihi</th>
+									<th>Otomatik Ödeme</th>
+									<th>Ücret / Para Birimi</th>
+									<th>İşlem</th>
+								</tr>
+								</thead>
+								<tbody>
+								<% if(panels.length == 0) { %>
+								<tr>
+									<td colspan="10" style="text-align: center;">Child Panel Bulunamadı!</td>
+								</tr>
+								<% } %>
+								<% panels.forEach((item) => { %>
+								<tr>
+									<td><%= item.id %></td>
+									<td>
+										<a href="/admin/users?user=<%= item.userID %>"><% if(item.userID.length > 10) { %><%= item.userID.substring(0, 10) %>...<% } else { %><%= item.userID %><% } %></a>
+									</td>
+									<td>
+										<a href="<%= item.info.site.domain %>" target="_blank"><% if(item.info.site.domain.length > 10) { %><%= item.info.site.domain.substring(0, 10) %>...<% } else { %><%= item.info.site.domain %><% } %></a>
+									</td>
+									<td>
+										<% if(item.info.site.status == "active") { %>
+											<span class="badge badge-success">Aktif</span>
+										<% } else if(item.info.site.status == "suspended") { %>
+											<span class="badge badge-danger">Askıda</span>
+										<% } else if(item.info.site.status == "installing") { %>
+											<span class="badge badge-warning">Kuruluyor</span>
+										<% } else if(item.info.site.status == "deleted") { %>
+											<span class="badge badge-danger">Silinmiş</span>
+										<% } else if(item.info.site.status == "deactive") { %>
+											<span class="badge badge-danger">Pasif</span>
+										<% } %>
+									</td>
+									<td>
+										<%= item.admin.username %>/<%= item.admin.password %>
+									</td>
+									<td>
+										<%= item.info.created %>
+									</td>
+									<td>
+										<%= item.info.nextPayment %>
+									</td>
+									<td>
+										<% if(item.info.autoPayment == true) { %>
+											<span class="badge badge-success">Aktif</span>
+										<% } else { %>
+											<span class="badge badge-danger">Pasif</span>
+										<% } %>
+									</td>
+									<td>
+										<%= item.info.monthlyPrice %> / <%= siteData.site.currency %>
+									</td>
+									<td>
+										<div class="btn-group-sm" role="group">
+										<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+											aria-haspopup="true" aria-expanded="false">
+											İşlemler
+										</button>
+										<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+											<% if(item.info.site.status == "suspended") { %>
+												<a class="dropdown-item" href="/admin/child_panels/unsuspend?id=<%= item.id %>">Askıdan Çıkar</a>
+											<% } else { %>
+												<a class="dropdown-item" href="/admin/child_panels/suspend?id=<%= item.id %>">Askıya Al</a>
+											<% } %>
+											<a class="dropdown-item" href="/admin/child_panels/delete?id=<%= item.id %>">Sil</a>
+										</div>
+										</div>
+									</td>
+								</tr>
+								<% }); %>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- footer -->
+			<%- include('../partials/_footer.ejs', { page: "orders" }) -%>
+			<!-- footer -->

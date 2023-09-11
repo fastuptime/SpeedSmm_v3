@@ -1,0 +1,101 @@
+<%- include('../../partials/_header.ejs') -%>
+		<div class="page-wrapper full-page">
+			<div class="page-content d-flex align-items-center justify-content-center">
+
+				<div class="row w-100 mx-0 auth-page">
+					<div class="col-md-8 col-xl-6 mx-auto">
+						<div class="card" style="border-radius: 20px; box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);">
+							<div class="row">
+                <div class="col-md-12 ps-md-3">
+                  <div class="auth-form-wrapper px-4 py-5">
+                    <a href="/" class="noble-ui-logo logo-light d-block mb-2" style="font-size: 2.5rem; text-align: center;" i18n="auth.register.title"><% if(siteData.site.integrations.seo.name.includes('SMM')) { %>
+                      <%= siteData.site.integrations.seo.name.replace('SMM', '' ).trim() %>
+                        <span>SMM</span>
+                        <% } else { %>
+                          <%= siteData.site.integrations.seo.name %>
+                            <% } %></a>
+                    <div class="forms-sample">
+                      <div class="mb-3">
+                        <label for="exampleInputUsername1" class="form-label"><%= __('auth.register.username') %></label>
+                        <input type="text" class="form-control" id="username" autocomplete="Username" placeholder="Username">
+                      </div>
+                      <div class="row g-3">
+                        <div class="mb-3 col-md-6">
+                          <label for="name" class="form-label"><%= __('auth.register.name') %></label>
+                          <input type="text" class="form-control" id="name" placeholder="Name">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                          <label for="surname" class="form-label"><%= __('auth.register.surname') %></label>
+                          <input type="text" class="form-control" id="surname" placeholder="Surname">
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="userEmail" class="form-label"><%= __('auth.register.email') %></label>
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                      </div>
+                      <% if(siteData.site.number.status || siteData.site.number.numberArea){ %>
+                      <div class="mb-3">
+                        <label for="phone" class="form-label"><%= __('auth.register.phone') %></label>
+                        <input type="text" class="form-control" id="phone" placeholder="Phone">
+                      </div>
+                      <% } %>
+                      <div class="row g-3">
+                        <div class="mb-3 col-md-6">
+                          <label for="password" class="form-label"><%= __('auth.register.password') %></label>
+                          <input type="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                          <label for="passwordConfirm" class="form-label"><%= __('auth.register.passwordConfirm') %></label>
+                          <input type="password" class="form-control" id="passwordConfirm" autocomplete="current-password" placeholder="Password Confirm">
+                        </div>
+                      </div>
+                      <center>
+                      <% if(siteData.site.integrations.captcha.status && !siteData.site.integrations.captcha.service) { %>
+                      <div
+                        id="hcaptcha"
+                        class="h-captcha"
+                        data-sitekey="<%= siteData.site.integrations.captcha.siteKey%>"
+                        data-callback="registerSpeedSmmPanel"
+                        data-size="invisible"
+                      ></div>
+                      <% } else if(siteData.site.integrations.captcha.status && siteData.site.integrations.captcha.service) { %>
+                      <div class="g-recaptcha"
+                            data-sitekey="<%= siteData.site.integrations.captcha.siteKey%>"
+                            data-callback="registerSpeedSmmPanel"
+                            data-size="invisible">
+                      </div>
+                      <% } %>
+                      </center>
+                      <% if(siteData.site.registerAgreement) { %>
+                      <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="authCheck">
+                        <label class="form-check-label" for="authCheck" id="rem">
+                          <a href="<%= sitePages.terms.url %>" class="text-primary"><%= __('auth.register.agree') %></a>
+                        </label>
+                      </div>
+                      <% } %>
+                      <div>
+                        <button class="btn btn-primary text-white me-2 mb-2 mb-md-0 col-md-12" id="register"
+                        onclick="
+                        <% if(siteData.site.integrations.captcha.status && !siteData.site.integrations.captcha.service) { %>
+                        hcaptcha.execute();
+                        <% } else if(siteData.site.integrations.captcha.status && siteData.site.integrations.captcha.service) { %>
+                        grecaptcha.execute();
+                        <% } else { %>
+                          registerSpeedSmmPanel('a');
+                        <% } %>
+                        "><%= __('auth.register.submit') %></button>
+                      </div>
+                      <a href="/auth/login" class="d-block mt-3 text-muted" style="text-align: center;"><%= __('auth.register.alreadyHaveAccount') %></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+      <!-- footer -->
+      <%- include('../../partials/_footer.ejs', { page: "auth" }) -%>
+      <!-- footer -->

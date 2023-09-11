@@ -1,0 +1,70 @@
+<%- include('../../partials/_header.ejs') -%>
+		<div class="page-wrapper full-page">
+			<div class="page-content d-flex align-items-center justify-content-center">
+
+				<div class="row w-100 mx-0 auth-page">
+					<div class="col-md-8 col-xl-6 mx-auto">
+						<div class="card" style="border-radius: 20px; box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);">
+							<div class="row">
+                <div class="col-md-12 ps-md-3">
+                  <div class="auth-form-wrapper px-4 py-5">
+                    <a href="/" class="noble-ui-logo logo-light d-block mb-2" style="font-size: 2.5rem; text-align: center;" i18n="auth.register.title"><% if(siteData.site.integrations.seo.name.includes('SMM')) { %>
+                      <%= siteData.site.integrations.seo.name.replace('SMM', '' ).trim() %>
+                        <span>SMM</span>
+                        <% } else { %>
+                          <%= siteData.site.integrations.seo.name %>
+                            <% } %></a>
+                    <div class="forms-sample">
+                      <div class="mb-3">
+                        <label for="exampleInputUsername1" class="form-label"><%= __('auth.login.username') %></label>
+                        <input type="text" class="form-control" id="username" autocomplete="Username" placeholder="Username">
+                      </div>
+                      <div class="mb-3">
+                        <label for="password" class="form-label"><%= __('auth.login.password') %></label>
+                        <input type="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password">
+                      </div>
+                      <center>
+                      <% if(siteData.site.integrations.captcha.status && !siteData.site.integrations.captcha.service) { %>
+                      <div
+                        id="hcaptcha"
+                        class="h-captcha"
+                        data-sitekey="<%= siteData.site.integrations.captcha.siteKey%>"
+                        data-callback="loginSpeedSmmPanel"
+                        data-size="invisible"
+                      ></div>
+                      <% } else if(siteData.site.integrations.captcha.status && siteData.site.integrations.captcha.service) { %>
+                      <div class="g-recaptcha"
+                            data-sitekey="<%= siteData.site.integrations.captcha.siteKey%>"
+                            data-callback="loginSpeedSmmPanel"
+                            data-size="invisible">
+                      </div>
+                      <% } %>
+                      </center>
+                      <div>
+                        <button class="btn btn-primary text-white me-2 mb-2 mb-md-0 col-md-12" id="login"
+                        onclick="
+                        <% if(siteData.site.integrations.captcha.status && !siteData.site.integrations.captcha.service) { %>
+                        hcaptcha.execute();
+                        <% } else if(siteData.site.integrations.captcha.status && siteData.site.integrations.captcha.service) { %>
+                        grecaptcha.execute();
+                        <% } else { %>
+                          loginSpeedSmmPanel('a');
+                        <% } %>
+                        "><%= __('auth.login.submit') %></button>
+                      </div>
+                      <a href="/auth/register" class="d-block mt-3 text-muted" style="text-align: center;"><%= __('auth.login.haveAccount') %></a>
+                      <% if(siteData.site.forgotPassword) { %>
+                        <a href="/auth/forgot_password" class="d-block mt-3 text-muted" style="text-align: center;"><%= __('auth.login.forgotPassword') %></a>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+      <!-- footer -->
+      <%- include('../../partials/_footer.ejs', { page: "auth" }) -%>
+      <!-- footer -->
